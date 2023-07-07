@@ -13,6 +13,10 @@ const starsContainerStyle = {
 
 StarsRating.propTypes = {
   maxValue: PropTypes.number,
+  color: PropTypes.string,
+  size: PropTypes.number,
+  className: PropTypes.string,
+  defaultRating: PropTypes.number,
 };
 
 export default function StarsRating({
