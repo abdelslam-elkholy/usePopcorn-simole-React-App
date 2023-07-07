@@ -12,5 +12,6 @@ root.render(
       messages={["Terrible", "Bad", "Fair", "Good", "Amazing"]}
       defaultRating={3}
     />
+    <StarsRating maxValue={"dd"} />
   </React.StrictMode>
 );
