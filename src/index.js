@@ -7,6 +7,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <StarsRating maxValue={10} />
-    <StarsRating />
+    <StarsRating size={24} color="red" />
   </React.StrictMode>
 );
