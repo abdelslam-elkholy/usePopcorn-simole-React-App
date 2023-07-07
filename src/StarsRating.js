@@ -14,6 +14,8 @@ export default function StarsRating({
   maxValue = 5,
   color = "#fcc419",
   size = 48,
+  className = "",
+  messages = [],
 }) {
   const textStyle = {
     color,
@@ -27,7 +29,7 @@ export default function StarsRating({
   };
 
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle} className={className}>
       <div style={starsContainerStyle}>
         {Array.from({ length: maxValue }, (_, i) => (
           <Star
@@ -41,7 +43,11 @@ export default function StarsRating({
           />
         ))}
       </div>
-      <p style={textStyle}>{tempRating || rate || ""}</p>
+      <p style={textStyle}>
+        {messages.length === maxValue
+          ? messages[tempRating ? tempRating - 1 : rate - 1]
+          : tempRating || rate || ""}
+      </p>
     </div>
   );
 }
