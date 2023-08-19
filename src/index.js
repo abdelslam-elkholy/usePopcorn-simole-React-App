@@ -1,17 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-// import "./index.css";
+import "./index.css";
 import StarsRating from "./StarsRating";
+import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <StarsRating maxValue={10} />
-    <StarsRating size={24} color="red" />
-    <StarsRating
-      messages={["Terrible", "Bad", "Fair", "Good", "Amazing"]}
-      defaultRating={3}
-    />
-    <StarsRating maxValue={"dd"} />
+    <App></App>
   </React.StrictMode>
 );
