@@ -106,11 +106,11 @@ export default function App() {
 }
 
 const ErrorComponent = ({ error }) => {
-  return <p> ⚠️ {error}</p>;
+  return <p className="error"> ⚠️ {error}</p>;
 };
 
 const Loader = () => {
-  return <p>Loading movies...</p>;
+  return <p className="loader">Loading movies...</p>;
 };
 
 function NavBar({ children }) {
