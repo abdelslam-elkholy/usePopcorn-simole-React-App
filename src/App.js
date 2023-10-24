@@ -57,15 +57,16 @@ export default function App() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    setIsLoading(true);
     const getmovies = async () => {
       try {
         const res = await fetch(
           `http://www.omdbapi.com/?s=interstellar&apikey=${KEY}`
         );
-        setIsLoading(true);
+
         const data = await res.json();
 
-        if (data.Response == "False") throw new Error("Somethiing Went Wrong");
+        if (data.Response === "False") throw new Error("Somethiing Went Wrong");
         if (!data.Search) throw new Error("No Movies Found");
 
         setMovies(data.Search);
