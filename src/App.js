@@ -63,7 +63,7 @@ export default function App() {
     const getmovies = async () => {
       try {
         const res = await fetch(
-          `http://www.omdbapi.com/?s=${query}&apikey=${KEY}`
+          `https://www.omdbapi.com/?s=${query}&apikey=${KEY}`
         );
         if (!res.ok) {
           throw new Error("Somethiing Went Wrong");
