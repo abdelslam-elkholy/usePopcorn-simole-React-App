@@ -55,19 +55,25 @@ export default function App() {
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [query, setQuery] = useState("interstellar");
 
   useEffect(() => {
     setIsLoading(true);
+    setError("");
     const getmovies = async () => {
       try {
         const res = await fetch(
-          `http://www.omdbapi.com/?s=interstellar&apikey=${KEY}`
+          `http://www.omdbapi.com/?s=${query}&apikey=${KEY}`
         );
+        if (!res.ok) {
+          throw new Error("Somethiing Went Wrong");
+        }
 
         const data = await res.json();
 
-        if (data.Response === "False") throw new Error("Somethiing Went Wrong");
-        if (!data.Search) throw new Error("No Movies Found");
+        if (data.Response === "False") {
+          throw new Error("No Movies Found");
+        }
 
         setMovies(data.Search);
       } catch (error) {
@@ -77,18 +83,18 @@ export default function App() {
       }
     };
     getmovies();
-  }, []);
+  }, [query]);
   return (
     <>
       <NavBar>
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumResult movies={movies} />
       </NavBar>
       <Main>
         <Box>
           {isLoading && <Loader />}
           {!isLoading && !error && <MoviesList movies={movies} />}
-          {error && <Error error={error} />}
+          {error && <ErrorComponent error={error} />}
         </Box>
         <Box>
           <WatchedSummary watched={watched} />
@@ -99,12 +105,14 @@ export default function App() {
   );
 }
 
-const Error = ({ error }) => {
+const ErrorComponent = ({ error }) => {
   return <p> ⚠️ {error}</p>;
 };
+
 const Loader = () => {
   return <p>Loading movies...</p>;
 };
+
 function NavBar({ children }) {
   return (
     <nav className="nav-bar">
@@ -123,8 +131,7 @@ function Logo() {
   );
 }
 
-function Search() {
-  const [query, setQuery] = useState("");
+function Search({ query, setQuery }) {
   return (
     <input
       className="search"
@@ -163,7 +170,7 @@ function Box({ children }) {
 
 function MoviesList({ movies }) {
   return (
-    <ul className="list">
+    <ul className="list list-movies">
       {movies?.map((movie) => (
         <Movie movie={movie} key={movie.imdbID} />
       ))}
