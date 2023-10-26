@@ -14,8 +14,8 @@ export default function App() {
   const [selectedId, setSelectedId] = useState(null);
 
   const [watched, setWatched] = useState(() => {
-    const watchedd = localStorage.getItem("watched");
-    return JSON.parse(watchedd);
+    const watchedd = JSON.parse(localStorage.getItem("watched")) || [];
+    return watchedd;
   });
 
   function handleSelectMovie(id) {
@@ -113,9 +113,7 @@ export default function App() {
             />
           ) : (
             <>
-              {watched && watched.length > 0 && (
-                <WatchedSummary watched={watched} />
-              )}
+              <WatchedSummary watched={watched} />
               <WatchedMoviesList
                 watched={watched}
                 onDeleteWatched={handleDeleteWatched}
@@ -419,15 +417,13 @@ function WatchedSummary({ watched }) {
 function WatchedMoviesList({ watched, onDeleteWatched }) {
   return (
     <ul className="list">
-      {watched &&
-        watched.length > 0 &&
-        watched.map((movie) => (
-          <WatchedMovie
-            movie={movie}
-            key={movie.imdbID}
-            onDeleteWatched={onDeleteWatched}
-          />
-        ))}
+      {watched.map((movie) => (
+        <WatchedMovie
+          movie={movie}
+          key={movie.imdbID}
+          onDeleteWatched={onDeleteWatched}
+        />
+      ))}
     </ul>
   );
 }
