@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarsRating";
 
 const average = (arr) =>
@@ -17,6 +17,8 @@ export default function App() {
     const watchedd = JSON.parse(localStorage.getItem("watched")) || [];
     return watchedd;
   });
+
+  const searchEle = useRef(null);
 
   function handleSelectMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
@@ -157,6 +159,22 @@ function Logo() {
 }
 
 function Search({ query, setQuery }) {
+  const searchEle = useRef(null);
+  useEffect(() => {
+    const callback = (e) => {
+      if (e.currentElement == searchEle.current) return;
+
+      if (e.code == "Enter") {
+        searchEle.current.focus();
+        setQuery("");
+      }
+    };
+    document.addEventListener("keydown", callback);
+
+    return function () {
+      document.addEventListener("keydown", callback);
+    };
+  }, [setQuery]);
   return (
     <input
       className="search"
@@ -164,6 +182,7 @@ function Search({ query, setQuery }) {
       placeholder="Search movies..."
       value={query}
       onChange={(e) => setQuery(e.target.value)}
+      ref={searchEle}
     />
   );
 }
